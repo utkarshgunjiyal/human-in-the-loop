@@ -61,6 +61,33 @@ let webpackConfig = {
 };
 
 webpackConfig.devServer = (devServerConfig) => {
+  // Patch react-scripts 5.0.1 → webpack-dev-server v5 incompatibilities
+  // 1) Convert legacy https/http2 → server.type
+  if (devServerConfig.https !== undefined) {
+    const https = devServerConfig.https;
+    delete devServerConfig.https;
+    if (https) {
+      devServerConfig.server = typeof https === "object" ? { type: "https", options: https } : { type: "https" };
+    }
+  }
+  // 2) Combine legacy onBefore/onAfter into the new setupMiddlewares hook.
+  const before = devServerConfig.onBeforeSetupMiddleware;
+  const after = devServerConfig.onAfterSetupMiddleware;
+  if (before || after) {
+    delete devServerConfig.onBeforeSetupMiddleware;
+    delete devServerConfig.onAfterSetupMiddleware;
+    const previousSetupMiddlewares = devServerConfig.setupMiddlewares;
+    devServerConfig.setupMiddlewares = (middlewares, devServer) => {
+      if (before) before(devServer);
+      if (previousSetupMiddlewares) middlewares = previousSetupMiddlewares(middlewares, devServer);
+      if (after) after(devServer);
+      return middlewares;
+    };
+  }
+
+  // Disable host check (preview ingress hits us via a custom host)
+  devServerConfig.allowedHosts = "all";
+
   // Add health check endpoints if enabled
   if (config.enableHealthCheck && setupHealthEndpoints && healthPluginInstance) {
     const originalSetupMiddlewares = devServerConfig.setupMiddlewares;

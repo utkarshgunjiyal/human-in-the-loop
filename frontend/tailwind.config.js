@@ -12,7 +12,18 @@ module.exports = {
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)'
       },
+      fontFamily: {
+        heading: ['Chivo', 'system-ui', 'sans-serif'],
+        body: ['"IBM Plex Sans"', 'system-ui', 'sans-serif'],
+        mono: ['"JetBrains Mono"', 'monospace'],
+        sans: ['"IBM Plex Sans"', 'system-ui', 'sans-serif']
+      },
       colors: {
+        cobalt: {
+          DEFAULT: '#002FA7',
+          hover: '#00227A',
+          light: '#E8EDFD'
+        },
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         card: {
