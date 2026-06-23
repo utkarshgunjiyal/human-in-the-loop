@@ -1,0 +1,151 @@
+{
+  "project_name": "AI-Powered Human-in-the-Loop Invoice Review System",
+  "theme": "Light",
+  "archetype": "Archetype 4: Swiss & High-Contrast",
+  "design_philosophy": "Authority, Clarity, Truth. The UI must feel objective, rigid, and functional. Perfect for an enterprise audit and invoice processing tool. Minimize decoration; maximize data clarity. Use high contrast, sharp edges, and monochrome foundations with strict, highly visible signal colors.",
+  "typography": {
+    "heading_font": "Chivo",
+    "body_font": "IBM Plex Sans",
+    "mono_font": "JetBrains Mono",
+    "rules": {
+      "h1": "font-heading text-4xl tracking-tight font-bold text-gray-900",
+      "h2": "font-heading text-2xl tracking-tight font-bold text-gray-900",
+      "h3": "font-heading text-xl tracking-tight font-semibold text-gray-900",
+      "data_labels": "text-xs tracking-[0.2em] uppercase font-semibold text-gray-500",
+      "body": "font-body text-sm text-gray-700 leading-relaxed",
+      "mono_data": "font-mono text-sm tracking-tight text-gray-800"
+    }
+  },
+  "colors": {
+    "background": {
+      "default": "#F3F4F6",
+      "surface": "#FFFFFF",
+      "surface_hover": "#F9FAFB"
+    },
+    "text": {
+      "primary": "#0A0A0A",
+      "secondary": "#4B5563",
+      "disabled": "#9CA3AF"
+    },
+    "primary": {
+      "DEFAULT": "#002FA7",
+      "hover": "#00227A",
+      "text": "#FFFFFF"
+    },
+    "status": {
+      "success": {
+        "bg": "#DCFCE7",
+        "text": "#166534",
+        "border": "#22C55E"
+      },
+      "warning": {
+        "bg": "#FEF3C7",
+        "text": "#92400E",
+        "border": "#F59E0B"
+      },
+      "error": {
+        "bg": "#FEE2E2",
+        "text": "#991B1B",
+        "border": "#EF4444"
+      },
+      "info": {
+        "bg": "#DBEAFE",
+        "text": "#1E40AF",
+        "border": "#3B82F6"
+      }
+    },
+    "border": {
+      "default": "#E5E7EB",
+      "focus": "#002FA7"
+    }
+  },
+  "spacing_and_layout": {
+    "philosophy": "The 'Control Room' Grid. Dense, data correlation, high scanability. Every pixel utilized.",
+    "container_padding": "p-6 lg:p-8",
+    "gap_strategy": "gap-4 or gap-6 for tight grid alignment",
+    "radius": "rounded-none or max rounded-sm (2px) to maintain a rigid, technical feel",
+    "shadows": "Avoid soft shadows. Use sharp 1px borders or hard offset shadows (e.g., shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]) for interactive elements."
+  },
+  "components": {
+    "Sidebar": {
+      "style": "Solid white background, 1px right border. Strict list of links. No fancy hover backgrounds, just a bold left-border highlight or sharp background shift (e.g., hover:bg-gray-100).",
+      "icons": "Use lucide-react, 16px size, stark stroke-width."
+    },
+    "DashboardCards": {
+      "style": "Flat background, 1px border. Cardless feel. Data label small uppercase, main metric huge (text-4xl) mono or sans.",
+      "hover_state": "-translate-y-[1px] shadow-sm border-gray-300 transition-all"
+    },
+    "UploadSection": {
+      "style": "Dashed 2px border, gray background. On drag-over, switch to solid primary color border with primary light bg.",
+      "interaction": "Clear, objective instructions. Use mono typography for supported file types."
+    },
+    "InvoiceTable": {
+      "style": "Dense layout. border-collapse. Bottom border on rows. Sticky header with gray background.",
+      "text": "Numbers must use tabular-nums (font-mono or equivalent). Keep text text-sm.",
+      "pagination": "Standard pagination logic, customized to remove rounded corners."
+    },
+    "StatusBadge": {
+      "style": "Solid sharp background with high contrast text and a 1px border. No rounded-full pills; use sharp rectangles.",
+      "typography": "text-xs font-bold uppercase tracking-wider"
+    },
+    "InvoiceDetail": {
+      "layout": "Two-column grid: PDF/Image viewer on the left (col-span-7), Data fields & Actions on the right (col-span-5).",
+      "fields": "Use robust inputs but remove rounded corners. Focus states must have a sharp 2px primary color ring."
+    },
+    "AuditTimeline": {
+      "style": "Vertical strict line. Small circular nodes. Timestamp in monospace. Event description in standard sans."
+    }
+  },
+  "motion": {
+    "philosophy": "Minimalist. Micro-interactions only.",
+    "hover": "Instant or 150ms ease-out.",
+    "transitions": "Only for opacity, background-color, and slight transforms. No bouncy animations."
+  },
+  "icons": {
+    "library": "lucide-react",
+    "style": "Clean, structural, stroke-width: 2"
+  },
+  "media": {
+    "avatars": [
+      {
+        "url": "https://images.pexels.com/photos/37148308/pexels-photo-37148308.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "description": "User avatar for reviewer 1"
+      },
+      {
+        "url": "https://images.pexels.com/photos/10816007/pexels-photo-10816007.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "description": "User avatar for reviewer 2"
+      }
+    ],
+    "backgrounds": [
+      {
+        "url": "https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1MTN8MHwxfHNlYXJjaHwxfHxhYnN0cmFjdCUyMG1pbmltYWwlMjBnZW9tZXRyaWMlMjBiYWNrZ3JvdW5kJTIwbGlnaHR8ZW58MHx8fHwxNzgyMTc3MTEzfDA&ixlib=rb-4.1.0&q=85",
+        "description": "Login page structural background. Set opacity to 10% to keep it extremely subtle."
+      }
+    ]
+  },
+  "accessibility": {
+    "contrast": "Ensure strict WCAG AA. Text on status badges must meet 4.5:1.",
+    "focus": "All interactive elements must use focus:ring-2 focus:ring-offset-1 focus:ring-[#002FA7]."
+  },
+  "data_testid_conventions": {
+    "required": true,
+    "format": "kebab-case, role-based",
+    "examples": [
+      "login-submit-button",
+      "upload-dropzone",
+      "invoice-row-approve-btn",
+      "sidebar-nav-dashboard",
+      "status-badge-pending"
+    ]
+  },
+  "instructions_to_main_agent": [
+    "Ensure your file extensions are .js/.jsx, not .tsx as requested by user constraints.",
+    "Install Google Fonts in index.css: @import url('https://fonts.googleapis.com/css2?family=Chivo:wght@400;700;900&family=IBM+Plex+Sans:wght@400;600&family=JetBrains+Mono&display=swap');",
+    "Extend Tailwind config to use these fonts: 'Chivo' for sans/headings, 'IBM Plex Sans' for body, 'JetBrains Mono' for mono.",
+    "Do NOT use standard rounded Shadcn cards. Strip 'rounded-xl' or 'rounded-lg' from the Shadcn components and replace with 'rounded-none' or 'rounded-sm'.",
+    "For the Invoice Detail view, heavily utilize grid layouts (e.g., grid-cols-1 md:grid-cols-12 gap-6) to create a 'Control Room' dense aesthetic.",
+    "Do not invent any generic blue/indigo palettes. Use the precise Hex codes provided in this JSON.",
+    "Ensure all components have data-testid attributes per the conventions.",
+    "Use lucide-react for all iconography."
+  ]
+}
