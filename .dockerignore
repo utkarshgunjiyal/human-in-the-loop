@@ -1,0 +1,34 @@
+# Git / CI
+.git
+.gitignore
+.github
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.mypy_cache/
+.venv/
+venv/
+
+# Node / frontend build
+**/node_modules/
+frontend/build/
+frontend/.cache/
+
+# Env & secrets
+**/.env
+**/.env.*
+!**/.env.example
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
+
+# Project artifacts
+test_reports/
+test_result.md
+memory/
+*.log

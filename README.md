@@ -4,7 +4,7 @@
 > document against a deterministic rules engine, routes ambiguous cases to a human
 > reviewer, and tracks every action in an immutable audit trail.
 
-**Stack:** React (CRA) · FastAPI · MongoDB (Motor) · JWT auth · Emergent LLM (Claude
+**Stack:** React (CRA) · FastAPI · MongoDB (Motor) · JWT auth · Anthropic Claude (Claude
 Sonnet 4.6) · Docker · Tailwind / shadcn-ui
 
 ---
@@ -24,7 +24,7 @@ replay exactly how each decision was made.
 
 - **JWT auth** with two roles: `ADMIN`, `REVIEWER`. Seeded admin + reviewer at startup.
 - **Two-stage extraction**: deterministic regex parser, with an LLM fallback (Claude
-  Sonnet via the Emergent universal key) when fields are missing or confidence is low.
+  Sonnet) when fields are missing or confidence is low.
 - **Rules Engine** with the exact policies specified:
   - Missing vendor / invoice number / amount / date → `HUMAN_REVIEW`
   - Amount > 100,000 → `HUMAN_REVIEW`
@@ -212,7 +212,7 @@ served by nginx (port 3000) with `/api` proxied to the backend.
   (React + FastAPI + MongoDB + JWT + Docker) with a deterministic rules engine and
   full audit trail.
 - Implemented a **hybrid extraction pipeline**: deterministic regex parser
-  followed by an LLM fallback (Claude Sonnet via Emergent Universal Key) when
+  followed by an LLM fallback (Anthropic Claude Sonnet) when
   field confidence is low, achieving robust parsing on PDF and TXT invoices.
 - Built a **role-based reviewer console** (Admin / Reviewer) with editable
   fields, approval workflow and a timeline of every system + reviewer action,

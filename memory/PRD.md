@@ -12,7 +12,7 @@ review when necessary, and fully tracked through an audit trail.
 ## Core requirements (static)
 1. Auth (JWT) with ADMIN / REVIEWER roles
 2. Invoice upload (PDF, TXT)
-3. Hybrid extraction: regex → LLM fallback (Claude via Emergent key)
+3. Hybrid extraction: regex → LLM fallback (Anthropic Claude)
 4. Rules engine: missing/duplicate/threshold checks
 5. Decision engine: APPROVED / REJECTED / HUMAN_REVIEW + reason
 6. Reviewer console: edit fields, approve, reject
@@ -26,7 +26,7 @@ review when necessary, and fully tracked through an audit trail.
 - All API endpoints from the brief, all under `/api`
 - Seeded admin + reviewer; bcrypt + JWT
 - Indexes on users.email, invoices.id, invoices.invoice_number, audit_logs.invoice_id
-- Hybrid extraction (regex + emergent Claude fallback)
+- Hybrid extraction (regex + Anthropic Claude fallback)
 - Frontend pages: Login, Signup, Dashboard, Upload, Queue, Invoice Detail with editable fields + actions + audit timeline
 - Tailwind: Chivo / IBM Plex Sans / JetBrains Mono fonts + cobalt theme
 - Dockerfile (backend), Dockerfile (frontend + nginx), docker-compose.yml, .env.example

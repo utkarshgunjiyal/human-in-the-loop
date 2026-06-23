@@ -1,19 +1,26 @@
 """Invoice extraction. Two-stage pipeline:
 1. Regex-based parser (fast, no API cost)
-2. LLM fallback (Emergent LLM key + Claude) when fields are missing or confidence low
+2. LLM fallback (Anthropic Claude) when fields are missing or confidence is low
 """
 from __future__ import annotations
 
 import io
 import json
+import logging
 import os
 import re
 from typing import Tuple
 
-from emergentintegrations.llm.chat import LlmChat, UserMessage
+from anthropic import AsyncAnthropic
 from pypdf import PdfReader
 
 from models import InvoiceFields
+
+logger = logging.getLogger("invoice-api.extraction")
+
+# Model is configurable so the deployment can track the latest Claude release
+# without a code change. Override via the ANTHROPIC_MODEL env var.
+_DEFAULT_MODEL = os.environ.get("ANTHROPIC_MODEL", "claude-sonnet-4-5")
 
 
 # ---------------------------------------------------------------------------
@@ -78,8 +85,13 @@ def regex_extract(text: str) -> Tuple[InvoiceFields, float]:
 # LLM fallback
 # ---------------------------------------------------------------------------
 async def llm_extract(text: str, session_id: str) -> InvoiceFields:
-    """Use Claude via Emergent LLM key to extract invoice fields as JSON."""
-    api_key = os.environ.get("EMERGENT_LLM_KEY")
+    """Use Anthropic Claude to extract invoice fields as a JSON object.
+
+    Returns an empty ``InvoiceFields`` when the API key is unset, the input is
+    blank, or the call fails — extraction degrades to the regex result rather
+    than raising, so a missing/invalid key never breaks the upload flow.
+    """
+    api_key = os.environ.get("ANTHROPIC_API_KEY")
     if not api_key or not text.strip():
         return InvoiceFields()
 
@@ -90,18 +102,26 @@ async def llm_extract(text: str, session_id: str) -> InvoiceFields:
         "amount (number, no currency symbol), description (short string). "
         "Use null when a field is genuinely not present."
     )
-    chat = LlmChat(api_key=api_key, session_id=session_id, system_message=system).with_model(
-        "anthropic", "claude-sonnet-4-6"
-    )
 
+    client = AsyncAnthropic(api_key=api_key)
     try:
-        reply = await chat.send_message(UserMessage(text=text[:6000]))
-    except Exception:
+        message = await client.messages.create(
+            model=_DEFAULT_MODEL,
+            max_tokens=512,
+            system=system,
+            messages=[{"role": "user", "content": text[:6000]}],
+            metadata={"user_id": session_id} if session_id else None,
+        )
+    except Exception as exc:  # network, auth, rate-limit, bad model id, etc.
+        logger.warning("LLM extraction failed (session=%s): %s", session_id, exc)
         return InvoiceFields()
 
-    raw = reply if isinstance(reply, str) else str(reply)
-    # strip code fences if any
-    raw = re.sub(r"^```(?:json)?|```$", "", raw.strip(), flags=re.MULTILINE).strip()
+    raw = "".join(
+        block.text for block in message.content if getattr(block, "type", None) == "text"
+    ).strip()
+
+    # strip code fences if the model wrapped the JSON
+    raw = re.sub(r"^```(?:json)?|```$", "", raw, flags=re.MULTILINE).strip()
     try:
         data = json.loads(raw)
     except Exception:
