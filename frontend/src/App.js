@@ -8,6 +8,7 @@ import ProtectedRoute from "@/components/ProtectedRoute";
 
 import Login from "@/pages/Login";
 import Signup from "@/pages/Signup";
+import Demo from "@/pages/Demo";
 import Dashboard from "@/pages/Dashboard";
 import Upload from "@/pages/Upload";
 import Queue from "@/pages/Queue";
@@ -20,6 +21,7 @@ function App() {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/demo" element={<Demo />} />
           <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
           <Route path="/upload" element={<ProtectedRoute><Upload /></ProtectedRoute>} />
           <Route path="/queue" element={<ProtectedRoute><Queue /></ProtectedRoute>} />

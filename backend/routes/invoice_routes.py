@@ -25,7 +25,10 @@ def _now() -> str:
 
 
 async def _existing_invoice_numbers() -> set[str]:
-    cursor = db.invoices.find({"invoice_number": {"$ne": None}}, {"invoice_number": 1, "_id": 0})
+    cursor = db.invoices.find(
+        {"invoice_number": {"$ne": None}, "demo": {"$ne": True}},
+        {"invoice_number": 1, "_id": 0},
+    )
     return {doc["invoice_number"] for doc in await cursor.to_list(length=10_000) if doc.get("invoice_number")}
 
 
@@ -92,7 +95,7 @@ async def list_invoices(
     limit: int = Query(default=100, le=500),
     user: dict = Depends(get_current_user),
 ):
-    query: dict = {}
+    query: dict = {"demo": {"$ne": True}}
     if status and status.upper() in {"APPROVED", "REJECTED", "HUMAN_REVIEW"}:
         query["status"] = status.upper()
     if search:

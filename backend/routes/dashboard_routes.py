@@ -8,33 +8,45 @@ from services.auth import get_current_user
 
 router = APIRouter(prefix="/api", tags=["dashboard"])
 
+# Demo invoices are surfaced only on the public /demo page, never on the real dashboard.
+NON_DEMO = {"demo": {"$ne": True}}
+
 
 @router.get("/stats")
 async def get_stats(user: dict = Depends(get_current_user)):
-    # counts
-    total = await db.invoices.count_documents({})
-    approved = await db.invoices.count_documents({"status": "APPROVED"})
-    rejected = await db.invoices.count_documents({"status": "REJECTED"})
-    human_review = await db.invoices.count_documents({"status": "HUMAN_REVIEW"})
+    # counts (exclude demo)
+    total = await db.invoices.count_documents(NON_DEMO)
+    approved = await db.invoices.count_documents({**NON_DEMO, "status": "APPROVED"})
+    rejected = await db.invoices.count_documents({**NON_DEMO, "status": "REJECTED"})
+    human_review = await db.invoices.count_documents({**NON_DEMO, "status": "HUMAN_REVIEW"})
 
     # aggregates
     agg = await db.invoices.aggregate(
         [
+            {"$match": NON_DEMO},
             {
                 "$group": {
                     "_id": None,
                     "total_amount": {"$sum": {"$ifNull": ["$amount", 0]}},
                     "avg_confidence": {"$avg": "$confidence_score"},
                 }
-            }
+            },
         ]
     ).to_list(length=1)
     total_amount = agg[0]["total_amount"] if agg else 0
     avg_conf = agg[0]["avg_confidence"] if agg else 0
     avg_conf = round(avg_conf or 0, 2)
 
-    # recent activity (last 10 audit events with invoice context)
-    recent = await db.audit_logs.find({}, {"_id": 0}).sort("created_at", -1).limit(10).to_list(length=10)
+    # recent activity: skip demo-invoice events
+    demo_ids = await db.invoices.distinct("id", {"demo": True})
+    recent = (
+        await db.audit_logs.find(
+            {"invoice_id": {"$nin": demo_ids}}, {"_id": 0}
+        )
+        .sort("created_at", -1)
+        .limit(10)
+        .to_list(length=10)
+    )
 
     return {
         "total_invoices": total,

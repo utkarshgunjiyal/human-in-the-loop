@@ -117,6 +117,15 @@ export default function Login() {
             </Link>
           </div>
 
+          <Link
+            to="/demo"
+            data-testid="login-goto-demo"
+            className="mt-4 inline-flex items-center justify-between w-full border border-gray-900 hover:bg-gray-900 hover:text-white px-4 py-2.5 text-sm font-semibold transition-colors"
+          >
+            Or browse the public demo (no sign-in)
+            <span aria-hidden>→</span>
+          </Link>
+
           <div className="mt-8 border-t border-[#E5E7EB] pt-4 text-[11px] font-mono text-gray-500 leading-relaxed">
             <div className="data-label mb-1">Demo credentials</div>
             admin@invoiceai.com / Admin@123<br />

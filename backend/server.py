@@ -14,7 +14,7 @@ from fastapi import FastAPI  # noqa: E402
 from starlette.middleware.cors import CORSMiddleware  # noqa: E402
 
 from database import client, db  # noqa: E402
-from routes import auth_routes, dashboard_routes, invoice_routes  # noqa: E402
+from routes import auth_routes, dashboard_routes, demo_routes, invoice_routes  # noqa: E402
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 logger = logging.getLogger("invoice-api")
@@ -26,6 +26,7 @@ app = FastAPI(title="AI Invoice Review API", version="1.0.0")
 app.include_router(auth_routes.router)
 app.include_router(invoice_routes.router)
 app.include_router(dashboard_routes.router)
+app.include_router(demo_routes.router)
 
 
 @app.get("/api/health")
@@ -61,6 +62,8 @@ async def on_startup():
 
     # Seed default admin + reviewer
     await auth_routes.seed_default_users()
+    # Seed demo invoices for the public /demo page
+    await demo_routes.seed_demo_invoices()
     logger.info("Startup complete. Database=%s", os.environ.get("DB_NAME"))
 
 
