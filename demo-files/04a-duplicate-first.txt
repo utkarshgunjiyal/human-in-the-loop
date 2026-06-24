@@ -1,0 +1,8 @@
+NORTHWIND TRADERS
+Sector 18, Gurugram 122015
+
+Vendor: Northwind Traders
+Invoice Number: DUP-5500
+Invoice Date: 2026-02-10
+Amount: 8900.00
+Description: Packaging materials bulk order
