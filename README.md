@@ -17,17 +17,13 @@ Invoice.AI — Human-in-the-Loop Invoice Review
 
 ## 📸 Screenshots
 
+## 📸 Screenshots
+
 | Dashboard | Upload & Decision |
 |:---:|:---:|
-| ![Dashboard](<img width="2880" height="1572" alt="image" src="https://github.com/user-attachments/assets/d568fc59-d3c2-46ab-9d9b-1a7b34190bd8" />
-) | ![Upload](<img width="2880" height="1560" alt="image" src="https://github.com/user-attachments/assets/519716a7-7fe8-4fa3-9886-d305b663c0e0" />
-) |
-
-| Review Queue | Invoice Detail & Audit Trail |
-|:---:|:---:|
-| ![Queue](<img width="2880" height="1568" alt="image" src="https://github.com/user-attachments/assets/b4b7f80f-b136-49d5-b34a-c274234cebf9" />
-) | ![Invoice Detail](<img width="2880" height="1560" alt="image" src="https://github.com/user-attachments/assets/a7caeb77-43fe-4413-a71d-f52ccf08615b" />
-) |
+| ![Dashboard](https://github.com/user-attachments/assets/d568fc59-d3c2-46ab-9d9b-1a7b34190bd8) | ![Upload](https://github.com/user-attachments/assets/519716a7-7fe8-4fa3-9886-d305b663c0e0) |
+| **Review Queue** | **Invoice Detail & Audit Trail** |
+| ![Queue](https://github.com/user-attachments/assets/b4b7f80f-b136-49d5-b34a-c274234cebf9) | ![Invoice Detail](https://github.com/user-attachments/assets/a7caeb77-43fe-4413-a71d-f52ccf08615b) |
 
 ---
 
