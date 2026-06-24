@@ -1,4 +1,4 @@
-<img width="2880" height="1684" alt="image" src="https://github.com/user-attachments/assets/58cf1cec-4b9a-4ee1-b01f-7f2b1664467e" /># Invoice.AI — Human-in-the-Loop Invoice Review
+Invoice.AI — Human-in-the-Loop Invoice Review
 
 **AI-assisted invoice intake that auto-approves the easy cases, auto-rejects duplicates, and escalates everything risky to a human — with a full, immutable audit trail behind every decision.**
 
